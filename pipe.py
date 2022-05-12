@@ -11,7 +11,7 @@ class Pipe(Sprite):
         self.settings = ai_game.settings
 
         #Load pipe image and set rect
-        self.image = pygame.image.load('Flappy Bird\images\Pipe(wide).bmp')
+        self.image = pygame.image.load('Flappy_Bird\images\Pipe(wide).bmp')
         self.rect = self.image.get_rect()
 
         #store pipes's exact location
