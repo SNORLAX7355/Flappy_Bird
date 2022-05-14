@@ -35,6 +35,7 @@ class FlappyBird:
         self.multiplier = [-1, 1]
         self.count = 0
 
+        #This initializes the hitboxes
         self.th = pygame.sprite.Group()
         self.bh = pygame.sprite.Group()
 
