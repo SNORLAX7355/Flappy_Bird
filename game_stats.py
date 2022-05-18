@@ -10,4 +10,5 @@ class GameStats:
 
     def reset_stats(self):
         """Initialize stats that can change"""
+        self.update_score = 1
         self.score = 0

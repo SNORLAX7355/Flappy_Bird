@@ -19,18 +19,20 @@ class FlappyBird:
         """Initialize game & create resources"""
         pygame.init()
         self.settings = Settings()
+        self.clock = pygame.time.Clock()
+        self.dt = 0
 
         self.screen = pygame.display.set_mode((self.settings.screen_width, self.settings.screen_height))
         pygame.display.set_caption("Flappy Bird")
 
         self.stats = GameStats(self)
-        self.update_score = 1
         self.sb = Scoreboard(self)
+
         self.bird = Bird(self)
 
         #pipes
         self.pipes = pygame.sprite.Group()
-        self.create_pipe = 0.0
+        self.timer = 3
         self.pipe_y = 2
         self.multiplier = [-1, 1]
         self.count = 0
@@ -47,13 +49,13 @@ class FlappyBird:
             self._check_events()
             
             if self.stats.game_active:
-                self.bird.update()
+                self.bird.update(self.dt)
                 self._update_pipes()
                 self._update_hitbox()
-                self.create_pipe += .5
-                if self.create_pipe == 1000:
+                self.timer -= self.dt
+                if self.timer <= 0:
                     self._create_pipe()
-                    self.create_pipe = 0
+                    self.timer = 1.6
 
             self._update_screen()
 
@@ -67,8 +69,6 @@ class FlappyBird:
                 self._check_play_button(mouse_pos)
             elif event.type == pygame.KEYDOWN:
                 self._check_keydown_events(event)
-            elif event.type == pygame.KEYUP:
-                self._check_keyup_events(event)
 
     def _check_play_button(self, mouse_pos):
         """reset game then start new game if clicked"""
@@ -79,7 +79,7 @@ class FlappyBird:
             self.sb.prep_score()
             self.bird.reset_bird()
             self.pipes.empty()
-            self.create_pipe = 0.0
+            self.timer = 3
             self.pipe_y = 2
             self.th.empty()
             self.bh.empty()
@@ -91,14 +91,8 @@ class FlappyBird:
         if event.key == pygame.K_q:
             sys.exit()
         elif event.key == pygame.K_SPACE:
-            self.bird.jump = True
-            self.bird.fall = False
-
-    def _check_keyup_events(self, event):
-        """Respond to key releases"""
-        if event.key == pygame.K_SPACE:
-            self.bird.jump = False
-            self.bird.fall = True
+            self.bird.a += 1
+            self.bird.jump = True 
 
     def _create_pipe(self):
         """Create pipes w/ hitboxes"""
@@ -125,23 +119,24 @@ class FlappyBird:
     
     def _update_pipes(self):
         """update pipe positionn and get rid of old ones"""
-        self.pipes.update()
+        self.pipes.update(self.dt)
 
         for pipe in self.pipes.copy():
             if pipe.rect.right <= 0:
                 self.pipes.remove(pipe)
         
         if pygame.sprite.spritecollideany(self.bird, self.pipes):
-            self.update_score += 1
-        if self.update_score % 625 == 0:
+            self.stats.update_score += 1
+        if self.stats.update_score % 20 == 0:
             self.stats.score += 1
+            self.stats.update_score = 1
             self.sb.prep_score()
             self.sb.check_high_scores()
 
     def _update_hitbox(self):
         """update hitbox for pipe"""
-        self.th.update()
-        self.bh.update()
+        self.th.update(self.dt)
+        self.bh.update(self.dt)
 
         for hitbox in self.th.copy():
             if hitbox.rect.right <= 0:
@@ -165,6 +160,8 @@ class FlappyBird:
     def _update_screen(self):
         """update imgaes on screen"""
         self.screen.fill(self.settings.bg_color)
+
+        self.dt = self.clock.tick(30) / 1000
 
         self.bird.blitme()
         self.pipes.draw(self.screen)  
