@@ -8,7 +8,5 @@ class Settings:
         self.screen_height = 812
         self.bg_color = (134, 206, 235)
         
-        self.bird_speed = .2
-        
-        self.pipe_speed = .2
+        self.pipe_speed = 200
         self.pipes_allowed = 3
