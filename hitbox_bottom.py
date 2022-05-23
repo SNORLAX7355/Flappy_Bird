@@ -18,7 +18,7 @@ class BottomHitbox(Sprite):
         self.rect.x = 540
         self.x = float(self.rect.x)
 
-    def update(self):
+    def update(self, dt):
         """Move hitbox with the pipes"""
-        self.x -= self.settings.pipe_speed
+        self.x -= self.settings.pipe_speed * dt
         self.rect.x = self.x

@@ -11,7 +11,7 @@ class Pipe(Sprite):
         self.settings = ai_game.settings
 
         #Load pipe image and set rect
-        self.image = pygame.image.load('Flappy_Bird\images\Pipe(wide).bmp')
+        self.image = pygame.image.load('C:\Python Coding\Flappy_Bird\images\Pipe(wide).bmp')
         self.rect = self.image.get_rect()
 
         #store pipes's exact location
@@ -21,7 +21,7 @@ class Pipe(Sprite):
         #pipe y coordinates
         self.pipe_height = [-690, -607.5, -525, -422.5, -360, -277.5, -195]
 
-    def update(self):
+    def update(self, dt):
         """Move pipes left across the screen"""
-        self.x -= self.settings.pipe_speed
+        self.x -= self.settings.pipe_speed * dt
         self.rect.x = self.x
