@@ -36,7 +36,7 @@ class Bird:
             self.b = 0
             self.v2 = 8
 
-            if self.v == 0:
+            if self.v <= 0:
                 self.jump = False
                 self.fv = 1
                 self.v = 8
@@ -50,7 +50,7 @@ class Bird:
             self.b = 0
             self.v = 8
             
-            if self.v2 == 0:
+            if self.v2 <= 0:
                 self.jump = False
                 self.fv = 1
                 self.v2 = 8
