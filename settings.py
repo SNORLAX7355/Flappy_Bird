@@ -21,6 +21,6 @@ class Settings:
 
     def increase_speed(self):
         """Increase speed of changing stats"""
-        if self.timer < 1.7:
+        if self.timer < 1.65:
             self.timer *= self.timer_sd_incr
         self.pipe_speed *= self.pipe_sd_incr

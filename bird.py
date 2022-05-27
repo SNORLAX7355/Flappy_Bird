@@ -23,7 +23,7 @@ class Bird:
         self.jump = False
         self.a = 0
         self.b = 0
-        self.v, self.v2 = 8, 8
+        self.v, self.v2 = 7.5, 7.5
         self.fv = 1
 
     def update(self, dt):
@@ -34,12 +34,12 @@ class Bird:
             self.v -= 1
 
             self.b = 0
-            self.v2 = 8
+            self.v2 = 7.5
 
             if self.v <= 0:
                 self.jump = False
                 self.fv = 1
-                self.v = 8
+                self.v = 7.5
                 self.a = 0
 
         if self.jump and self.rect.top > 0 and (self.a % 2 == 1):
@@ -48,12 +48,12 @@ class Bird:
             self.v2 -= 1
 
             self.b = 0
-            self.v = 8
+            self.v = 7.5
             
             if self.v2 <= 0:
                 self.jump = False
                 self.fv = 1
-                self.v2 = 8
+                self.v2 = 7.5
                 self.a = 0
 
         if self.rect.top < 0:
@@ -78,7 +78,7 @@ class Bird:
         self.y = self.rect.y
         self.jump = False
         self.a = 0
-        self.v, self.v2 = 8, 8
+        self.v, self.v2 = 7.5, 7.5
         self.fv = 1
 
     def blitme(self):
