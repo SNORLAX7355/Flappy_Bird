@@ -9,6 +9,7 @@ from scoreboard import Scoreboard
 from bird import Bird
 from pipe import Pipe
 from hitbox_top import TopHitbox
+from hitbox_middle import MiddleHitbox
 from hitbox_bottom import BottomHitbox
 from start_button import Button
 
@@ -40,6 +41,7 @@ class FlappyBird:
         #This initializes the hitboxes
         self.th = pygame.sprite.Group()
         self.bh = pygame.sprite.Group()
+        self.mh = pygame.sprite.Group()
 
         self.play_button = Button(self, "Play")
 
@@ -82,6 +84,7 @@ class FlappyBird:
             self.timer = 3
             self.pipe_y = 2
             self.th.empty()
+            self.mh.empty()
             self.bh.empty()
             pygame.mouse.set_visible(False)
             sleep(0.5)
@@ -101,6 +104,7 @@ class FlappyBird:
             while self.count != 1:
                 pipe = Pipe(self)
                 top_h = TopHitbox(self)
+                middle_h = MiddleHitbox(self)
                 bottom_h = BottomHitbox(self) 
                 num = random.randint(1,3)
                 direction = random.choice(self.multiplier)
@@ -109,9 +113,11 @@ class FlappyBird:
                 if self.pipe_y >= 0 and self.pipe_y < 7:
                     pipe.rect.y = pipe.pipe_height[self.pipe_y]
                     top_h.rect.y = pipe.pipe_height[self.pipe_y]
+                    middle_h.rect.y = pipe.pipe_height[self.pipe_y] + 744
                     bottom_h.rect.y = pipe.pipe_height[self.pipe_y] + 955
                     self.pipes.add(pipe)
                     self.th.add(top_h)
+                    self.mh.add(middle_h)
                     self.bh.add(bottom_h)
                     self.count = 1
                 else:
@@ -124,18 +130,11 @@ class FlappyBird:
         for pipe in self.pipes.copy():
             if pipe.rect.right <= 0:
                 self.pipes.remove(pipe)
-        
-        if pygame.sprite.spritecollideany(self.bird, self.pipes):
-            self.stats.update_score += 1
-        if self.stats.update_score % 20 == 0:
-            self.stats.score += 1
-            self.stats.update_score = 1
-            self.sb.prep_score()
-            self.sb.check_high_scores()
 
     def _update_hitbox(self):
         """update hitbox for pipe"""
         self.th.update(self.dt)
+        self.mh.update(self.dt)
         self.bh.update(self.dt)
 
         for hitbox in self.th.copy():
@@ -145,6 +144,14 @@ class FlappyBird:
         for hitbox in self.bh.copy():
             if hitbox.rect.right <= 0:
                 self.bh.remove(hitbox)
+
+        if pygame.sprite.spritecollideany(self.bird, self.mh):
+            self.stats.score += 1
+            self.sb.prep_score()
+            self.sb.check_high_scores()
+            for hitbox in self.mh.copy():
+                if hitbox.rect.left < 160:
+                    self.mh.remove(hitbox)
 
         if pygame.sprite.spritecollideany(self.bird, self.th):
             self._bird_hit()
