@@ -142,11 +142,9 @@ class FlappyBird:
         if self.stats.score % 10 == 5 and self.timer <= .04:
             self.speedup = 0
             self.sdlvl = 1
-            print("Changed")
         if self.stats.score % 10 == self.speedup and self.sdlvl == 1:
             self.sdlvl = 0
             self.settings.increase_speed()
-            print(f"Change: (Score: {self.stats.score}) (Timer: {self.settings.timer}) (pipe speed: {self.settings.pipe_speed})")
 
     def _update_hitbox(self):
         """update hitbox for pipe"""
