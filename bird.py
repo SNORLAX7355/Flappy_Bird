@@ -10,7 +10,7 @@ class Bird:
         self.screen_rect = ai_game.screen.get_rect()
 
         #load image of bird
-        self.image = pygame.image.load('C:\Python Coding\Flappy_Bird\images\Bird.bmp')
+        self.image = pygame.image.load('images\Bird.bmp')
         self.rect = self.image.get_rect()
 
         #start position
