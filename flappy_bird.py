@@ -105,7 +105,7 @@ class FlappyBird:
         """Create pipes w/ hitboxes"""
         if len(self.pipes) < self.settings.pipes_allowed:
             self.count = 0
-            x = random.randint(1,8)
+            x = random.randint(1,7)
             while self.count != 1:
                 pipe = Pipe(self)
                 top_h = TopHitbox(self)
