@@ -2,7 +2,7 @@ import pygame
 from pygame.sprite import Sprite
 
 class Pipe(Sprite):
-    """Class to represent singular alien fleet"""
+    """Class to represent singular pipe"""
 
     def __init__(self, ai_game):
         """Initialize the pipes and set position"""
@@ -11,7 +11,7 @@ class Pipe(Sprite):
         self.settings = ai_game.settings
 
         #Load pipe image and set rect
-        self.image = pygame.image.load('C:\Python Coding\Flappy_Bird\images\Pipe(wide).bmp')
+        self.image = pygame.image.load('images\Pipe.bmp')
         self.rect = self.image.get_rect()
 
         #store pipes's exact location
