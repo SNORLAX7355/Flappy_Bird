@@ -26,7 +26,7 @@ class Bird:
         self.v, self.v2 = 8, 8
         self.fv = 1
 
-    def update(self, dt):
+    def update(self):
         """Update bird position"""
         if self.jump and self.rect.top > 0 and (self.a % 2 == 0):
             F = (1/2) * (self.v**2)

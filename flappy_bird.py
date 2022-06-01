@@ -55,7 +55,7 @@ class FlappyBird:
             self._check_events()
             
             if self.stats.game_active:
-                self.bird.update(self.dt)
+                self.bird.update()
                 self._update_pipes()
                 self._update_hitbox()
                 self.timer -= self.dt

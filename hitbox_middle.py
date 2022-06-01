@@ -11,11 +11,11 @@ class MiddleHitbox(Sprite):
         self.settings = ai_game.settings
 
         #set up hitboxes
-        self.hitbox = pygame.Surface([76, 211], pygame.SRCALPHA)
+        self.hitbox = pygame.Surface([10, 211], pygame.SRCALPHA)
         self.rect = self.hitbox.get_rect()
 
         #store hitbox exact location
-        self.rect.x = 540
+        self.rect.x = 578
         self.x = float(self.rect.x)
 
     def update(self, dt):
